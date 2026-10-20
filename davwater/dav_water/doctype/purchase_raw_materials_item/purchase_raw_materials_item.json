@@ -1,0 +1,148 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-04-22 16:33:29.372812",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "item_code",
+  "item_name",
+  "warehouse",
+  "req_qty",
+  "uom",
+  "avl_qty",
+  "column_break_7",
+  "net_qty",
+  "rate",
+  "minimum_order_qty",
+  "ordered_qty",
+  "order_qty",
+  "purchase_uom",
+  "supplier",
+  "supplier_name"
+ ],
+ "fields": [
+  {
+   "columns": 2,
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Item Code",
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "item_code.item_name",
+   "fieldname": "item_name",
+   "fieldtype": "Read Only",
+   "label": "Item Name"
+  },
+  {
+   "columns": 1,
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Warehouse",
+   "options": "Warehouse",
+   "reqd": 1
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "label": "UOM",
+   "options": "UOM",
+   "reqd": 1
+  },
+  {
+   "columns": 1,
+   "fieldname": "avl_qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Avl. Qty",
+   "read_only": 1
+  },
+  {
+   "fieldname": "net_qty",
+   "fieldtype": "Float",
+   "label": "Net Qty",
+   "read_only": 1
+  },
+  {
+   "columns": 1,
+   "fieldname": "ordered_qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Ordered Qty",
+   "read_only": 1
+  },
+  {
+   "columns": 1,
+   "fieldname": "order_qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Order Qty",
+   "reqd": 1
+  },
+  {
+   "columns": 1,
+   "fieldname": "purchase_uom",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Purchase UOM",
+   "options": "UOM",
+   "reqd": 1
+  },
+  {
+   "columns": 1,
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Supplier",
+   "options": "Supplier",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "columns": 1,
+   "fieldname": "req_qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Req. Qty",
+   "read_only": 1
+  },
+  {
+   "columns": 1,
+   "fieldname": "minimum_order_qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Minimum Order",
+   "read_only": 1
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "label": "Rate"
+  },
+  {
+   "fetch_from": "supplier.supplier_name",
+   "fieldname": "supplier_name",
+   "fieldtype": "Read Only",
+   "label": "Supplier Name"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-05-17 14:06:05.144223",
+ "modified_by": "Administrator",
+ "module": "Dav Water",
+ "name": "Purchase Raw Materials Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

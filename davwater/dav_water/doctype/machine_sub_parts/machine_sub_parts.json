@@ -1,0 +1,48 @@
+{
+ "actions": [],
+ "creation": "2021-08-25 08:56:09.696682",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "parts",
+  "parts_name",
+  "qty"
+ ],
+ "fields": [
+  {
+   "fieldname": "parts",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Parts",
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "parts.item_name",
+   "fieldname": "parts_name",
+   "fieldtype": "Read Only",
+   "in_list_view": 1,
+   "label": "Parts Name"
+  },
+  {
+   "default": "1",
+   "fieldname": "qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Qty"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2021-08-25 08:57:33.568203",
+ "modified_by": "Administrator",
+ "module": "Dav Water",
+ "name": "Machine Sub Parts",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

@@ -1,0 +1,363 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2022-04-25 11:06:55.354874",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "amended_from",
+  "column_break_3",
+  "company",
+  "section_break_5",
+  "customer",
+  "customer_name",
+  "old_machine_serial_no",
+  "old_item_code",
+  "old_item_name",
+  "location",
+  "column_break_12",
+  "issue_date",
+  "old_amc_status",
+  "old_warranty_expiry_date",
+  "service_visit",
+  "reason_for_replacement",
+  "contact_info_section",
+  "contact_person",
+  "contact_mobile",
+  "column_break_21",
+  "contact_email",
+  "contact_display",
+  "new_machine_details_section",
+  "new_machine_serial_no",
+  "new_item_code",
+  "new_item_name",
+  "column_break_27",
+  "warehouse",
+  "new_amc_status",
+  "new_warranty_expiry_date",
+  "new_service_details_section",
+  "create_new_service",
+  "start_date",
+  "end_date",
+  "column_break_35",
+  "periodicity",
+  "no_of_visits",
+  "service_team",
+  "chargeable_service_item_section",
+  "is_chargeable",
+  "chargeable_item"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Name",
+   "options": "MRR.####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Machine Replacement",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_5",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Customer",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "customer.customer_name",
+   "fieldname": "customer_name",
+   "fieldtype": "Read Only",
+   "in_list_view": 1,
+   "label": "Customer Name"
+  },
+  {
+   "fieldname": "old_machine_serial_no",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Machine Serial No",
+   "options": "Serial No",
+   "reqd": 1
+  },
+  {
+   "fieldname": "old_item_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Item Code",
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "old_item_code.item_name",
+   "fieldname": "old_item_name",
+   "fieldtype": "Read Only",
+   "label": "Item Name"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "label": "Location",
+   "options": "Location",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_12",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "issue_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Issue Date",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "old_amc_status",
+   "fieldtype": "Select",
+   "label": "Warranty / AMC Status",
+   "options": "\nUnder Warranty\nOut of Warranty\nUnder AMC\nOut of AMC",
+   "reqd": 1
+  },
+  {
+   "fieldname": "old_warranty_expiry_date",
+   "fieldtype": "Date",
+   "label": "Warranty Expiry Date"
+  },
+  {
+   "fieldname": "reason_for_replacement",
+   "fieldtype": "Small Text",
+   "label": "Reason for Replacement",
+   "reqd": 1
+  },
+  {
+   "fieldname": "contact_info_section",
+   "fieldtype": "Section Break",
+   "label": "Contact Info"
+  },
+  {
+   "fieldname": "contact_person",
+   "fieldtype": "Link",
+   "label": "Contact Person",
+   "options": "Contact"
+  },
+  {
+   "depends_on": "customer",
+   "fieldname": "contact_mobile",
+   "fieldtype": "Data",
+   "label": "Mobile No",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_21",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "customer",
+   "fieldname": "contact_email",
+   "fieldtype": "Data",
+   "label": "Contact Email",
+   "read_only": 1
+  },
+  {
+   "fieldname": "contact_display",
+   "fieldtype": "Small Text",
+   "label": "Contact",
+   "read_only": 1
+  },
+  {
+   "fieldname": "new_machine_details_section",
+   "fieldtype": "Section Break",
+   "label": "New Machine Details"
+  },
+  {
+   "fieldname": "new_machine_serial_no",
+   "fieldtype": "Link",
+   "label": "Machine Serial No",
+   "options": "Serial No",
+   "reqd": 1
+  },
+  {
+   "fieldname": "new_item_code",
+   "fieldtype": "Link",
+   "label": "Item Code",
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "new_item_code.item_name",
+   "fieldname": "new_item_name",
+   "fieldtype": "Read Only",
+   "label": "Item Name"
+  },
+  {
+   "fieldname": "column_break_27",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "label": "Warehouse",
+   "options": "Warehouse",
+   "reqd": 1
+  },
+  {
+   "fieldname": "new_amc_status",
+   "fieldtype": "Select",
+   "label": "Warranty / AMC Status",
+   "options": "\nUnder Warranty\nOut of Warranty\nUnder AMC\nOut of AMC"
+  },
+  {
+   "fieldname": "new_warranty_expiry_date",
+   "fieldtype": "Date",
+   "label": "Warranty Expiry Date"
+  },
+  {
+   "fieldname": "new_service_details_section",
+   "fieldtype": "Section Break",
+   "label": "New Service Details"
+  },
+  {
+   "default": "0",
+   "fieldname": "create_new_service",
+   "fieldtype": "Check",
+   "label": "Create New Service Schedule"
+  },
+  {
+   "depends_on": "create_new_service",
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date",
+   "mandatory_depends_on": "create_new_service"
+  },
+  {
+   "depends_on": "create_new_service",
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "End Date",
+   "mandatory_depends_on": "create_new_service"
+  },
+  {
+   "fieldname": "column_break_35",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "create_new_service",
+   "fieldname": "periodicity",
+   "fieldtype": "Select",
+   "label": "Periodicity",
+   "options": "\nWeekly\nMonthly\nQuarterly\nHalf Yearly\nYearly\nRandom"
+  },
+  {
+   "depends_on": "create_new_service",
+   "fieldname": "no_of_visits",
+   "fieldtype": "Int",
+   "label": "No of Visits",
+   "mandatory_depends_on": "create_new_service"
+  },
+  {
+   "depends_on": "create_new_service",
+   "fieldname": "service_team",
+   "fieldtype": "Link",
+   "label": "Service Team",
+   "mandatory_depends_on": "create_new_service",
+   "options": "Service Team"
+  },
+  {
+   "fieldname": "chargeable_service_item_section",
+   "fieldtype": "Section Break",
+   "label": "Chargeable Service Item"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_chargeable",
+   "fieldtype": "Check",
+   "label": "Is chargeable"
+  },
+  {
+   "depends_on": "is_chargeable",
+   "fieldname": "chargeable_item",
+   "fieldtype": "Table",
+   "label": "Chargeable Item",
+   "mandatory_depends_on": "is_chargeable",
+   "options": "Chargeable Service Item"
+  },
+  {
+   "fieldname": "service_visit",
+   "fieldtype": "Link",
+   "label": "Service Visit",
+   "options": "Service Visit",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [
+  {
+   "group": "Service Schedule",
+   "link_doctype": "Service Schedule",
+   "link_fieldname": "machine_replacement_request"
+  },
+  {
+   "group": "Sales Invoice",
+   "link_doctype": "Sales Invoice",
+   "link_fieldname": "machine_replacement_request"
+  },
+  {
+   "group": "Delivery Note",
+   "link_doctype": "Delivery Note",
+   "link_fieldname": "machine_replacement_request"
+  }
+ ],
+ "modified": "2022-06-13 15:35:58.296223",
+ "modified_by": "Administrator",
+ "module": "Dav Water",
+ "name": "Machine Replacement",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "customer,old_machine_serial_no",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "customer"
+}

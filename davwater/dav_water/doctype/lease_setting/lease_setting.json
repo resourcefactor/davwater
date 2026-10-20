@@ -1,0 +1,87 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-10-20 20:39:26.482295",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "lease_asset_section",
+  "asset_credit_account",
+  "column_break_3",
+  "asset_debit_account",
+  "section_break_5",
+  "to_warehouse",
+  "column_break_7",
+  "account"
+ ],
+ "fields": [
+  {
+   "fieldname": "lease_asset_section",
+   "fieldtype": "Section Break",
+   "label": "Lease Asset"
+  },
+  {
+   "fieldname": "asset_credit_account",
+   "fieldtype": "Link",
+   "label": "Asset Credit Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "asset_debit_account",
+   "fieldtype": "Link",
+   "label": "Asset Debit Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "section_break_5",
+   "fieldtype": "Section Break",
+   "label": "Stock entry"
+  },
+  {
+   "fieldname": "to_warehouse",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Asset Return Warehouse",
+   "options": "Warehouse",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "account",
+   "fieldtype": "Link",
+   "label": "Account",
+   "options": "Account",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2022-12-10 12:01:51.397023",
+ "modified_by": "Administrator",
+ "module": "Dav Water",
+ "name": "Lease Setting",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

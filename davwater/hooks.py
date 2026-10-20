@@ -1,34 +1,13 @@
+from . import __version__ as app_version
+
 app_name = "davwater"
 app_title = "Dav Water"
 app_publisher = "RF"
 app_description = "Dav Water"
+app_icon = "octicon octicon-file-directory"
+app_color = "grey"
 app_email = "hamza@rf.com"
-app_license = "mit"
-
-# Apps
-# ------------------
-
-# required_apps = []
-
-# Each item in the list will be shown as an app in the apps page
-# add_to_apps_screen = [
-# 	{
-# 		"name": "davwater",
-# 		"logo": "/assets/davwater/logo.png",
-# 		"title": "Dav Water",
-# 		"route": "/davwater",
-# 		"has_permission": "davwater.api.permission.has_app_permission",
-# 	}
-# ]
-
-# The dock, the rail down the left of the desk, is a document rather than a hook. Author it in
-# Manage Dock on a developer-mode site and press Export to App, and it is written to
-# `davwater/dock/davwater/davwater.json` for git to carry. An app that ships none has no
-# rail: its sidebar gets a switcher in the header instead.
-#
-# A companion app, one that extends a host app rather than standing on its own, says so with
-# `mount_on` on that same record, and its entries are appended to the host's rail. Mounting keeps
-# the companion off the apps screen, so it takes precedence over any add_to_apps_screen above.
+app_license = "MIT"
 
 # Includes in <head>
 # ------------------
@@ -52,16 +31,27 @@ app_license = "mit"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
-# doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
-# doctype_kanban_js = {"doctype" : "public/js/doctype_kanban.js"}
+doctype_js = {
+	"Attendance": "public/js/attendance.js",
+	"Delivery Note": "public/js/delivery_note.js",
+	"Sales Invoice": "public/js/sales_invoice.js",
+	"Sales Order": "public/js/sales_order.js",
+	"Shift Type": "public/js/shift_type.js",
+	"Timesheet": "public/js/timesheet.js",
+	"Salary Slip": "public/js/salary_slip.js",
+	"Salary Structure": "public/js/salary_structure.js",
+	"Salary Structure Assignment": "public/js/salary_structure_assignment.js",
+	"Quality Inspection": "public/js/quality_inspection.js",
+	"Purchase Receipt": "public/js/purchase_receipt.js",
+	"Item": "public/js/item.js",
+	"Expense Claim": "public/js/expense_claim.js",
+	"Quotation": "public/js/quotation.js",
+	"Item Tax Template": "public/js/item_tax_template.js",
+	"Stock Entry": "public/js/stock_entry.js"
+}
+doctype_list_js = {"Asset": "public/js/asset_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
-
-# Svg Icons
-# ------------------
-# include app icons in desk
-# app_include_icons = "davwater/public/icons.svg"
 
 # Home Pages
 # ----------
@@ -71,7 +61,7 @@ app_license = "mit"
 
 # website user home page (by Role)
 # role_home_page = {
-# 	"Role": "home_page"
+#	"Role": "home_page"
 # }
 
 # Generators
@@ -80,68 +70,17 @@ app_license = "mit"
 # automatically create page for each record of this doctype
 # website_generators = ["Web Page"]
 
-# automatically load and sync documents of this doctype from downstream apps
-# importable_doctypes = [doctype_1]
-
-# Jinja
-# ----------
-
-# add methods and filters to jinja environment
-# jinja = {
-# 	"methods": "davwater.utils.jinja_methods",
-# 	"filters": "davwater.utils.jinja_filters"
-# }
-
 # Installation
 # ------------
 
 # before_install = "davwater.install.before_install"
 # after_install = "davwater.install.after_install"
 
-# Uninstallation
-# ------------
-
-# before_uninstall = "davwater.uninstall.before_uninstall"
-# after_uninstall = "davwater.uninstall.after_uninstall"
-
-# Integration Setup
-# ------------------
-# To set up dependencies/integrations with other apps
-# Name of the app being installed is passed as an argument
-
-# before_app_install = "davwater.utils.before_app_install"
-# after_app_install = "davwater.utils.after_app_install"
-
-# Integration Cleanup
-# -------------------
-# To clean up dependencies/integrations with other apps
-# Name of the app being uninstalled is passed as an argument
-
-# before_app_uninstall = "davwater.utils.before_app_uninstall"
-# after_app_uninstall = "davwater.utils.after_app_uninstall"
-
-# Build
-# ------------------
-# To hook into the build process
-
-# after_build = "davwater.build.after_build"
-
-# To hook into the build process of other apps
-# The list of apps being built is passed as an argument
-
-# after_app_build = "davwater.build.after_app_build"
-
 # Desk Notifications
 # ------------------
 # See frappe.core.notifications.get_notification_config
 
 # notification_config = "davwater.notifications.get_notification_config"
-
-# Awesome Bar
-# -----------
-# Extra search results: list of dicts with label, description, route, index.
-# route: ["List", "ToDo"], "/desk/docs/some/page", or "https://example.com"
-# awesomebar_search = ["davwater.search.awesomebar_results"]
 
 # Permissions
 # -----------
@@ -155,108 +94,129 @@ app_license = "mit"
 # 	"Event": "frappe.desk.doctype.event.event.has_permission",
 # }
 
+# DocType Class
+# ---------------
+# Override standard doctype classes
+
+override_doctype_class = {
+	"Purchase Receipt": "davwater.hook_event.Override_purchase_receipt.OverridePurchaseReceipt",
+	"Item": "davwater.hook_event.override_item.OverrideItem",
+	"Expense Claim": "davwater.hook_event.expense_claim.OverrideExpenseClaim",
+	"GL Entry": "davwater.hook_event.override_gl_entry.OverrideGLEntry",
+	"Sales Invoice": "davwater.hook_event.override_sales_invoice.OverrideSalesInvoice",
+	"Auto Repeat": "davwater.hook_event.auto_repeat.OverrideAutoRepeat",
+	# "Repost Item Valuation": "davwater.hook_event.repost_item_valuation.OverrideRepostItemValuation",
+	"Salary Slip": "davwater.hook_event.salary_slip.OverrideSalarySlip",
+	"Payroll Entry": "davwater.hook_event.payroll_entry.OverridePayrollEntry",
+	# "Stock Ledger Entry": "davwater.hook_event.stock_ledger_entry.OvrStockLedgerEntry",
+	"Stock Entry": "davwater.hook_event.stock_entry.OvrStockEntry",
+	# "Landed Cost Voucher": "davwater.hook_event.landed_cost_voucher.OvrLandedCostVoucher",
+	"Asset Depreciation Schedule": "davwater.hook_event.asset_depreciation_schedule.OverrideAssetDepreciationSchedule",
+	"Serial and Batch Bundle": "davwater.hook_event.serial_and_batch_bundle.OvrSerialandBatchBundle"
+}
+
 # Document Events
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"Delivery Note": {
+		"validate": "davwater.hook_event.delivery_note.validate_service_pack_item",
+		"on_submit": ["davwater.hook_event.delivery_note.make_service_schedule",
+					"davwater.hook_event.delivery_note.create_trial_type_jv",
+					"davwater.hook_event.delivery_note.create_assets_item_and_asset_recode",
+					"davwater.hook_event.delivery_note.create_device_list_entry"],
+		"on_cancel": ["davwater.hook_event.delivery_note.check_service_schedule",
+					  # "davwater.hook_event.util.remove_incoming_rate_ln_on_sr_no"
+					  ],
+		"before_save": ["davwater.hook_event.delivery_note.set_expense_account",
+						"davwater.hook_event.delivery_note.set_item_level_lease_value"]
+	},
+	# "Employee Checkin": {
+	# 	"before_save": "davwater.hook_event.custom_shift_type.fetch_shift"
+	# },
+	"Quality Inspection": {
+		"on_submit": "davwater.hook_event.customize_quality_inspection.make_stock_entry"
+	},
+	"Stock Entry": {
+		"on_submit": "davwater.hook_event.util.make_stock_entry_qc",
+		"on_cancel": ["davwater.hook_event.util.remove_incoming_rate_ln_on_sr_no"]
+	},
+	"Purchase Invoice": {
+		"validate": "davwater.hook_event.util.calculate_purchase_recoverable_std_exp",
+		"on_cancel": ["davwater.hook_event.util.remove_incoming_rate_ln_on_sr_no"]
+	},
+	"Purchase Receipt": {
+		"on_cancel": ["davwater.hook_event.util.remove_incoming_rate_ln_on_sr_no"],
+		"on_submit": ["davwater.hook_event.Override_purchase_receipt.make_quality_inspection"]
+	},
+	"Sales Invoice": {
+		"on_submit": ["davwater.hook_event.delivery_note.create_reverse_jv",
+					  "davwater.hook_event.delivery_note.create_sales_invoice_auto_repeat"],
+		# 'validate': 'davwater.hook_event.util.set_lease_income_acc_sinv'
+	},
+	"Sales Order": {
+		"before_save": "davwater.hook_event.delivery_note.set_item_level_lease_value"
+	},
+	"Expense Claim": {
+		"validate": "davwater.hook_event.util.validate_exchange_rate_expense_claim"
+	},
+	"*": {
+		"on_cancel": "davwater.hook_event.util.disabled_auto_repeat"
+	}
+}
 
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-# 	"all": [
-# 		"davwater.tasks.all"
-# 	],
-# 	"daily": [
-# 		"davwater.tasks.daily"
-# 	],
-# 	"hourly": [
-# 		"davwater.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"davwater.tasks.weekly"
-# 	],
-# 	"monthly": [
-# 		"davwater.tasks.monthly"
-# 	],
-# }
+scheduler_events = {
+	# "hourly": [
+	# 	"davwater.hook_event.custom_shift_type.set_attendance_summary"
+	# ],
+	"daily": [
+		# "davwater.dav_water.doctype.gratuity_settings.gratuity_settings.create_monthly_gratuity_jv",
+		"davwater.hook_event.schedulars_methods.send_customer_notification",
+		"davwater.hook_event.schedulars_methods.send_without_service_pack_notification",
+		"davwater.dav_water.doctype.currency_exchange_settings_ew.currency_exchange_settings_ew.update_exchange_currency_rate"
+	],
+	"cron": {
+		"0 10 * * *": [
+			"davwater.dav_water.doctype.xe_currency_exchange_setting.xe_currency_exchange_setting.update_xe_exchange_currency_rate"
+		],
+		"1 0 * * *": "davwater.dav_water.doctype.gratuity_settings.gratuity_settings.create_monthly_gratuity_jv",
+	}
+}
 
 # Testing
 # -------
 
 # before_tests = "davwater.install.before_tests"
 
-# Extend DocType Class
-# ------------------------------
-#
-# Specify custom mixins to extend the standard doctype controller.
-# extend_doctype_class = {
-# 	"Task": "davwater.custom.task.CustomTaskMixin"
-# }
-
 # Overriding Methods
 # ------------------------------
 #
-# override_whitelisted_methods = {
-# 	"frappe.desk.doctype.event.event.get_events": "davwater.event.get_events"
-# }
+override_whitelisted_methods = {
+	"erpnext.controllers.stock_controller.make_quality_inspections": "davwater.hook_event.util.make_quality_inspections",
+	# "erpnext.stock.utils.get_incoming_rate": "davwater.hook_event.util.get_incoming_rate",
+	"erpnext.stock.doctype.stock_entry.stock_entry.get_warehouse_details": "davwater.hook_event.stock_entry.get_warehouse_details"
+}
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
 # along with any modifications made in other Frappe apps
-# override_doctype_dashboards = {
-# 	"Task": "davwater.task.get_dashboard_data"
-# }
-
+override_doctype_dashboards = {
+	"Delivery Note": "davwater.hook_event.delivery_note_dashboard.get_data",
+	"Purchase Receipt": "davwater.hook_event.override_purchase_receipt_dashboard.get_data",
+	"Quality Inspection": "davwater.hook_event.quality_inspection_dashboard.get_data",
+	"Stock Entry": "davwater.hook_event.stock_entry_dashboard.get_data"
+}
 # exempt linked doctypes from being automatically cancelled
 #
 # auto_cancel_exempted_doctypes = ["Auto Repeat"]
 
-# Ignore links to specified DocTypes when deleting documents
-# -----------------------------------------------------------
-
-# ignore_links_on_delete = ["Communication", "ToDo"]
-
-# Request Events
-# ----------------
-# before_request = ["davwater.utils.before_request"]
-# after_request = ["davwater.utils.after_request"]
-
-# Job Events
-# ----------
-# before_job = ["davwater.utils.before_job"]
-# after_job = ["davwater.utils.after_job"]
 
 # User Data Protection
 # --------------------
-
-# user_data_fields = [
-# 	{
-# 		"doctype": "{doctype_1}",
-# 		"filter_by": "{filter_by}",
-# 		"redact_fields": ["{field_1}", "{field_2}"],
-# 		"partial": 1,
-# 	},
-# 	{
-# 		"doctype": "{doctype_2}",
-# 		"filter_by": "{filter_by}",
-# 		"partial": 1,
-# 	},
-# 	{
-# 		"doctype": "{doctype_3}",
-# 		"strict": False,
-# 	},
-# 	{
-# 		"doctype": "{doctype_4}"
-# 	}
-# ]
 
 # Authentication and authorization
 # --------------------------------
@@ -264,16 +224,4 @@ app_license = "mit"
 # auth_hooks = [
 # 	"davwater.auth.validate"
 # ]
-
-# Automatically update python controller files with type annotations for this app.
-# export_python_type_annotations = True
-
-# default_log_clearing_doctypes = {
-# 	"Logging DocType Name": 30  # days to retain logs
-# }
-
-# Translation
-# ------------
-# List of apps whose translatable strings should be excluded from this app's translations.
-# ignore_translatable_strings_from = []
 

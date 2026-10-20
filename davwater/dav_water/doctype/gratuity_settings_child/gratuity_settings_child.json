@@ -1,0 +1,55 @@
+{
+ "actions": [],
+ "creation": "2023-12-11 13:28:55.726919",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "company",
+  "column_break_ovzu0",
+  "gratuity_exp_account",
+  "gratuity_accrual_account"
+ ],
+ "fields": [
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "gratuity_exp_account",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Gratuity Exp. Account",
+   "options": "Account",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_ovzu0",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "gratuity_accrual_account",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Gratuity Accrual Account",
+   "options": "Account",
+   "reqd": 1
+  }
+ ],
+ "hide_toolbar": 1,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-12-19 12:47:35.752730",
+ "modified_by": "Administrator",
+ "module": "Dav Water",
+ "name": "Gratuity Settings Child",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

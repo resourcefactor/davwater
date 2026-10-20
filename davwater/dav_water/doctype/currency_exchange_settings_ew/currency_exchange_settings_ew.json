@@ -1,0 +1,97 @@
+{
+ "actions": [],
+ "creation": "2021-09-29 17:32:44.728421",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "enabled",
+  "section_break_2",
+  "url",
+  "api_key",
+  "method",
+  "update_data",
+  "column_break_3",
+  "currencies",
+  "to_currencies"
+ ],
+ "fields": [
+  {
+   "description": "https://v6.exchangerate-api.com/v6",
+   "fieldname": "url",
+   "fieldtype": "Data",
+   "label": "Url",
+   "mandatory_depends_on": "eval:doc.enabled == 1"
+  },
+  {
+   "fieldname": "api_key",
+   "fieldtype": "Small Text",
+   "label": "API Key",
+   "mandatory_depends_on": "eval:doc.enabled == 1"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "currencies",
+   "fieldtype": "Table",
+   "label": "From Currencies",
+   "mandatory_depends_on": "eval:doc.enabled == 1",
+   "options": "Currency Exchange Settings Child"
+  },
+  {
+   "default": "0",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "enabled"
+  },
+  {
+   "depends_on": "eval:doc.enabled == 1",
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break"
+  },
+  {
+   "description": "latest",
+   "fieldname": "method",
+   "fieldtype": "Data",
+   "label": "Method"
+  },
+  {
+   "depends_on": "eval:doc.enabled == 1",
+   "fieldname": "update_data",
+   "fieldtype": "Button",
+   "label": "Update Data"
+  },
+  {
+   "fieldname": "to_currencies",
+   "fieldtype": "Table",
+   "label": "To Currencies",
+   "options": "Currency Exchange Settings Child"
+  }
+ ],
+ "hide_toolbar": 1,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2022-03-31 10:06:18.552846",
+ "modified_by": "Administrator",
+ "module": "Dav Water",
+ "name": "Currency Exchange Settings EW",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

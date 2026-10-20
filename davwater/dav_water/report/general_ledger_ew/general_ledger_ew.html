@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<style type="text/css">
+	.container1 {
+		width:100%;
+		font-size: 14px;
+		margin-left: 17px;;
+	}
+	#st-box {
+		float:left;
+		width:25%;
+	}
+	#nd-box {
+		float:left;
+		width:46%;
+	}
+	#rd-box {
+		float:right;
+		width:29%;
+	}
+	h4 {
+		margin-top: 10px !important;
+	}
+	.seconnd-portion {
+		border:2px solid black;
+		border-radius:10px;
+		padding:15px;
+		width:80%;
+	}
+	.about-banks{
+		display:flex;
+		
+	}
+</style>
+
+<div class="container1">
+	<div id="st-box">
+		<img src="/files/AWC-logo-BLK1.png" width="150" style="padding-top: 53px;">
+	</div>
+	
+	<div id="nd-box">
+		<p>
+			<strong style="font-size: 18px; color: #7a8dc5">AIR WATER UNITS TRADING LTD</strong><br>
+			Unit KLP FZ No.03<br>
+			Taweelah, Abu Dhabi, UAE<br>
+			Phone: +971 2 666 1979<br>
+			Vat Registration No : 100485512600003
+		</p>
+	</div>
+</div>
+<br><br><br><br><br><br><br><br><br>
+
+<!-- <img src="/files/buyer_gl_header.png" width="65%"> -->
+
+<div style="width: 100%;">
+	<div style="float: left; margin-left: 17px; width: 50%;">
+		{% if (filters.party_name) { %}
+			<b style="font-size: 16px;">{%= filters.party_name %}</b><br>
+			{%= filters.address_display %}
+			{% if (filters.tax_id) { %}
+				{%= __("TRN: ")%}{%= filters.tax_id %}
+			{% } %}
+		{% } %}
+	</div>
+
+	<div style="float: right; width: 46%;">
+		<table style="border: 1px solid black; width: 100%;">
+			<tr>
+				<td colspan="3" style="text-align: center;"><b>Statement of Account</b></td>
+			</tr>
+			{% for(var i=data.length-1, l=data.length; i<l; i++) { %}
+				<tr>
+					<td width="33.33%"><b>Total Debit</b></td>
+					<td width="33.33%"></td>
+					<td width="33.33%"><b>{%= format_currency(data[i].debit, filters.presentation_currency) %}</b></td>
+				</tr>
+				<tr>
+					<td width="33.33%"><b>Total Credit</b></td>
+					<td width="33.33%"></td>
+					<td width="33.33%"><b>{%= format_currency(data[i].credit, filters.presentation_currency) %}</b></td>
+				</tr>
+				<tr style="border-top: 1px solid black;">
+					<td width="33.33%"><b>Closing Balance</b></td>
+					<td width="33.33%"></td>
+					<td width="33.33%"><b>{%= format_currency(data[i].balance, filters.presentation_currency) %}</b></td>
+				</tr>
+			{% } %}
+		</table>
+		<b>Period:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{%= frappe.datetime.str_to_user(filters.from_date) %} {%= __("to") %} {%= frappe.datetime.str_to_user(filters.to_date) %}</b>
+	</div>
+</div>
+
+<div style="margin-bottom: 15%;"></div>
+
+<table style="width: 100%;">
+	<tr style="border-bottom: 2px solid black; border-top: 2px solid black;">
+		<td style="width: 10%"><b>{%= __("Date") %}</b></td>
+		<td style="width: 11%"><b>{%= __("Trans Type") %}</b></td>
+		<td style="width: 11%"><b>{%= __("Reference") %}</b></td>
+		<td style="width: 25%"><b>{%= __("Trans Description") %}</b></td>
+		<td style="width: 13%"><b>{%= __("Party") %}</b></td>
+		<td style="width: 10%; text-align: right;"><b>{%= __("Debit") %}</b></td>
+		<td style="width: 10%; text-align: right;"><b>{%= __("Credit") %}</b></td>
+		<td style="width: 10%; text-align: right;"><b>{%= __("Balance") %}</b></td>
+	</tr>
+
+	{% for(var i=0, l=1; i<l; i++) { %}
+		<tr>
+			<td></td>
+			<td><b>{%= __("Balance b'f")%}</b></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td style="text-align: right">
+				{%= data[i].account && format_currency(data[i].debit, filters.presentation_currency) %}
+			</td>
+			<td style="text-align: right">
+				{%= data[i].account && format_currency(data[i].credit, filters.presentation_currency) %}
+			</td>
+			<td style="text-align: right">
+				{%= format_currency(data[i].balance, filters.presentation_currency) %}
+			</td>
+		</tr>
+	{% } %}
+
+	{% for(var i=1, l=data.length; i<l-2; i++) { %}
+		<tr>
+		{% if(data[i].posting_date) { %}
+			<td>{%= frappe.datetime.str_to_user(data[i].posting_date) %}</td>
+			<td>{%= data[i].voucher_type %}</td>
+			<td>{%= data[i].voucher_no %}</td>
+			{% var longest_word = cstr(data[i].remarks).split(" ").reduce((longest, word) => word.length > longest.length ? word : longest, ""); %}
+			<td {% if longest_word.length > 45 %} class="overflow-wrap-anywhere" {% endif %}>
+				<span>
+				{% if(!(filters.party || filters.account)) { %}
+					{%= data[i].party || data[i].account %}
+					<br><br>
+				{% } %}
+
+				{%= __("Remarks") %}: {%= data[i].remarks %}
+				{% if(data[i].bill_no) { %}
+					<br>{%= __("Supplier Invoice No") %}: {%= data[i].bill_no %}
+				{% } %}
+				</span>
+			</td>
+			<td>{%= data[i].party_name %}</td>
+			<td style="text-align: right">
+				{%= format_currency(data[i].debit, filters.presentation_currency) %}
+			</td>
+			<td style="text-align: right">
+				{%= format_currency(data[i].credit, filters.presentation_currency) %}
+			</td>
+		{% } else { %}
+			<td></td>
+			<td></td>
+			<td><b>{%= frappe.format(data[i].account, {fieldtype: "Link"}) || "&nbsp;" %}</b></td>
+			<td style="text-align: right">
+				{%= data[i].account && format_currency(data[i].debit, filters.presentation_currency) %}
+			</td>
+			<td></td>
+			<td style="text-align: right">
+				{%= data[i].account && format_currency(data[i].credit, filters.presentation_currency) %}
+			</td>
+		{% } %}
+			<td style="text-align: right">
+				{%= format_currency(data[i].balance, filters.presentation_currency) %}
+			</td>
+		</tr>
+	{% } %}
+	{% for(var i=data.length-1, l=data.length; i<l; i++) { %}
+		<tr style="border-top: 2px solid black; width: 100%;">
+			<td colspan="7"><b>{%= data[i].amount_in_words %}</b></td>
+			<td style="text-align: right;"><b>{%= format_currency(data[i].balance, filters.presentation_currency) %}</b></td>
+		</tr>
+	{% } %}
+</table>
+<br><br>
+<footer>
+	<p>If You have any queries about the this statement please contact our Finance team via email at <b>Finance@a1rwater.com</b><br>Please make any payment due, by electronic transfer to our bank account</p>
+	<div class="seconnd-portion">
+		<div class="acc-name">
+			Account Name: <b>Air Water Units Trading ltd</b>
+		</div>
+		<div class="bank-name">
+			Bank: <b>Abu Dhabi Commercial Bank PJSC</b>
+		</div>
+		<div class="adress">
+			Adress: <b>Al Nahyan Branch, Abu Dhabi, UAE</b>
+		</div>
+		Swift: <b>ADCBAEAA</b>
+		<div class="about-banks">
+			<div class="account-number">
+				<h4>Account NO.</h4>
+				UAE Dhirhams: 11303177920002<br>
+				US Dollar: 11303177920003
+			</div>
+			<div style="width:20%"></div>
+			<div class="iban-number">
+				<h4>IBAN</h4>
+				AE920030011303177920002<br>
+				AE650030011303177920003
+			</div>
+		</div>
+	</div>
+</footer>

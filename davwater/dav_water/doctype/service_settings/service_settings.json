@@ -1,0 +1,240 @@
+{
+ "actions": [],
+ "creation": "2021-08-21 09:41:19.402917",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "sales_invoice_item",
+  "column_break_2",
+  "notf_alert",
+  "customer_mail_template_section",
+  "mail_templates_section",
+  "send_customer",
+  "for_customer",
+  "for_employee",
+  "email_reply_help",
+  "consumable_parts_notification_for_customer_section",
+  "is_send_notification",
+  "periods",
+  "without_service_notification",
+  "email_reply_example",
+  "notification_for_callout_section",
+  "is_send_callout_notification",
+  "callout_response",
+  "reply_example",
+  "check_7",
+  "sender",
+  "sender_name",
+  "email",
+  "column_break_23",
+  "notify_person",
+  "stock_moment_section",
+  "issue_warehouse",
+  "cost_center",
+  "column_break_25",
+  "account"
+ ],
+ "fields": [
+  {
+   "fieldname": "sales_invoice_item",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Item for Sales Invoice",
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer_mail_template_section",
+   "fieldtype": "Section Break",
+   "label": "Customer Mail Template"
+  },
+  {
+   "fieldname": "mail_templates_section",
+   "fieldtype": "Section Break",
+   "label": "Mail Templates"
+  },
+  {
+   "depends_on": "send_customer",
+   "fieldname": "for_customer",
+   "fieldtype": "Text Editor",
+   "label": "For Customer",
+   "mandatory_depends_on": "send_customer"
+  },
+  {
+   "fieldname": "for_employee",
+   "fieldtype": "Text Editor",
+   "label": "For Service Team",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "check_7",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "sender",
+   "fieldtype": "Link",
+   "label": "Owner (Sender)",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "sender.email",
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "email",
+   "options": "Email",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "sender.full_name",
+   "fieldname": "sender_name",
+   "fieldtype": "Data",
+   "label": "Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "email_reply_help",
+   "fieldtype": "HTML",
+   "label": "Email Reply Help",
+   "options": "<b><h4> Use only below fields</h4>\n<pre>- service name: {name}<br>\n- start date: {start_date}<br>\n- end date: {end_date}<br>\n- customer: {customer}<br>\n- sales person: {sales_person}<br>\n- tiem code: {item_code}<br>\n- item name: {item_name}<br>\n- serial no: {serial_no}<br>\n- delivery note: {delivery_note} <br>\n- sales invoice: {sales_invoice}</pre></b>"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "In Month",
+   "fieldname": "notf_alert",
+   "fieldtype": "Int",
+   "label": "Notification  Alert",
+   "reqd": 1
+  },
+  {
+   "fieldname": "consumable_parts_notification_for_customer_section",
+   "fieldtype": "Section Break",
+   "label": "Notification for Sales without Servicing Pack"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_send_notification",
+   "fieldtype": "Check",
+   "label": "I send Notifcation"
+  },
+  {
+   "depends_on": "eval:doc.is_send_notification ==1",
+   "description": "In Month",
+   "fieldname": "periods",
+   "fieldtype": "Int",
+   "label": "Periods",
+   "mandatory_depends_on": "eval:doc.is_send_notification ==1"
+  },
+  {
+   "depends_on": "eval:doc.is_send_notification ==1",
+   "fieldname": "email_reply_example",
+   "fieldtype": "HTML",
+   "label": "Email Reply Example",
+   "options": "<h4>Email Reply Example</h4>\n\n<pre>Order Overdue\n\nTransaction {{ name }} has exceeded Due Date. Please take necessary action.\n\nDetails\n\n- Customer: {{ customer }}\n- Amount: {{ grand_total }}\n</pre>\n\n<h4>How to get fieldnames</h4>\n\n<p>The fieldnames you can use in your email template are the fields in the document from which you are sending the email. You can find out the fields of any documents via Setup &gt; Customize Form View and selecting the document type (e.g. Delivery Note)</p>\n\n<h4>Templating</h4>\n\n<p>Templates are compiled using the Jinja Templating Language. To learn more about Jinja, <a class=\"strong\" href=\"http://jinja.pocoo.org/docs/dev/templates/\">read this documentation.</a></p>\n"
+  },
+  {
+   "depends_on": "eval:doc.is_send_notification ==1",
+   "fieldname": "without_service_notification",
+   "fieldtype": "Text Editor",
+   "label": "Response",
+   "mandatory_depends_on": "eval:doc.is_send_notification ==1"
+  },
+  {
+   "fieldname": "notification_for_callout_section",
+   "fieldtype": "Section Break",
+   "label": "Notification for Callout"
+  },
+  {
+   "depends_on": "eval:doc.is_send_callout_notification == 1",
+   "fieldname": "callout_response",
+   "fieldtype": "Text Editor",
+   "label": "Response",
+   "mandatory_depends_on": "eval:doc.is_send_callout_notification == 1"
+  },
+  {
+   "depends_on": "eval:doc.is_send_callout_notification == 1",
+   "fieldname": "reply_example",
+   "fieldtype": "HTML",
+   "label": "Reply Example ",
+   "options": "<h4>Email Reply Example</h4>\n\nDetails\n\n- Customer: {{ customer }}\n- Customer Name: {{ customer_name }}\n\n\n<h4>How to get fieldnames</h4>\n\n<p>The fieldnames you can use in your email template are the fields in the document from which you are sending the email. You can find out the fields of any documents via Setup &gt; Customize Form View and selecting the document type (e.g. Callout Form)</p>\n\n<h4>Templating</h4>\n\n<p>Templates are compiled using the Jinja Templating Language. To learn more about Jinja, <a class=\"strong\" href=\"http://jinja.pocoo.org/docs/dev/templates/\">read this documentation.</a></p>"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_send_callout_notification",
+   "fieldtype": "Check",
+   "label": "Is Send Callout Notification"
+  },
+  {
+   "fieldname": "stock_moment_section",
+   "fieldtype": "Section Break",
+   "label": "Stock Moment"
+  },
+  {
+   "fieldname": "issue_warehouse",
+   "fieldtype": "Link",
+   "label": "Issue Warehouse",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center"
+  },
+  {
+   "fieldname": "column_break_25",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "account",
+   "fieldtype": "Link",
+   "label": "Account",
+   "options": "Account"
+  },
+  {
+   "default": "0",
+   "fieldname": "send_customer",
+   "fieldtype": "Check",
+   "label": "Send Customer"
+  },
+  {
+   "description": "Separate By Comma ( , )",
+   "fieldname": "notify_person",
+   "fieldtype": "Small Text",
+   "label": "Notify Person"
+  },
+  {
+   "fieldname": "column_break_23",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "hide_toolbar": 1,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2023-02-21 19:20:19.659698",
+ "modified_by": "Administrator",
+ "module": "Dav Water",
+ "name": "Service Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

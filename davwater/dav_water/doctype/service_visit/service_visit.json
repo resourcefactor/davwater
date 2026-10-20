@@ -1,0 +1,672 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2021-08-19 11:22:43.714132",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "engine": "InnoDB",
+ "field_order": [
+  "customer_details",
+  "naming_series",
+  "customer",
+  "customer_name",
+  "contact_mobile",
+  "contact_email",
+  "item_code",
+  "item_name",
+  "serial_no",
+  "column_break1",
+  "mntc_date",
+  "mntc_time",
+  "maintenance_schedule",
+  "maintenance_schedule_detail",
+  "callout",
+  "location",
+  "service_team",
+  "maintenance_type",
+  "maintenance_details",
+  "replaced_items_section",
+  "item_replaced",
+  "machine_history_section",
+  "screen_version",
+  "mainborad_version",
+  "machine_generation",
+  "faults",
+  "fault_comment",
+  "ambient_temp_mmi",
+  "tank_leve",
+  "ambient_rh_mmi",
+  "water_today",
+  "water_yesterday",
+  "water_day_before_yesterday",
+  "water_total",
+  "total_power_kw",
+  "total_compressor_hours",
+  "column_break_43",
+  "drain_tank_status",
+  "overall_function",
+  "overall_comment",
+  "column_break_34",
+  "water_smell",
+  "water_smell_comment",
+  "water_taste_10",
+  "water_test_comment",
+  "tds_first_cup",
+  "water_temp_room",
+  "ph",
+  "tds_4th_cup",
+  "water_temp_chill",
+  "column_break_48",
+  "water_total_taken_at_visit",
+  "noise",
+  "ambient_temp_meter",
+  "ambient_rh_meter",
+  "section_break0",
+  "completion_status",
+  "work_done",
+  "items_to_be_replaced_in_future_section",
+  "item_replace_in_future",
+  "more_info",
+  "customer_feedback",
+  "col_break3",
+  "status",
+  "company",
+  "contact_info_section",
+  "contact_person",
+  "contact_display",
+  "col_break4",
+  "customer_address",
+  "address_display",
+  "territory",
+  "customer_group",
+  "chargeable_service_item_section",
+  "is_chargeable",
+  "chargeable_item",
+  "customer_signature_section",
+  "customer_signature",
+  "section_break_73",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "customer_details",
+   "fieldtype": "Section Break",
+   "oldfieldtype": "Section Break",
+   "options": "fa fa-user"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "no_copy": 1,
+   "options": "MAT-MVS-.YYYY.-",
+   "print_hide": 1,
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_global_search": 1,
+   "label": "Customer",
+   "oldfieldname": "customer",
+   "oldfieldtype": "Link",
+   "options": "Customer",
+   "print_hide": 1,
+   "reqd": 1
+  },
+  {
+   "bold": 1,
+   "fetch_from": "customer.customer_name",
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "label": "Customer Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "address_display",
+   "fieldtype": "Small Text",
+   "label": "Address",
+   "read_only": 1
+  },
+  {
+   "fieldname": "contact_display",
+   "fieldtype": "Small Text",
+   "in_global_search": 1,
+   "label": "Contact",
+   "read_only": 1
+  },
+  {
+   "fieldname": "contact_mobile",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Mobile No",
+   "read_only": 1
+  },
+  {
+   "fieldname": "contact_email",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Contact Email",
+   "read_only": 1
+  },
+  {
+   "fieldname": "maintenance_schedule",
+   "fieldtype": "Link",
+   "label": "ServiceS chedule",
+   "options": "Service Schedule",
+   "read_only": 1
+  },
+  {
+   "fieldname": "maintenance_schedule_detail",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Service Schedule Detail",
+   "options": "Service Schedule Detail"
+  },
+  {
+   "fieldname": "column_break1",
+   "fieldtype": "Column Break",
+   "oldfieldtype": "Column Break",
+   "width": "50%"
+  },
+  {
+   "default": "Today",
+   "fieldname": "mntc_date",
+   "fieldtype": "Date",
+   "label": "Service Date",
+   "no_copy": 1,
+   "oldfieldname": "mntc_date",
+   "oldfieldtype": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "mntc_time",
+   "fieldtype": "Time",
+   "label": "Service Time",
+   "no_copy": 1,
+   "oldfieldname": "mntc_time",
+   "oldfieldtype": "Time"
+  },
+  {
+   "fieldname": "maintenance_details",
+   "fieldtype": "Section Break",
+   "oldfieldtype": "Section Break",
+   "options": "fa fa-wrench"
+  },
+  {
+   "fieldname": "completion_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Completion Status",
+   "oldfieldname": "completion_status",
+   "oldfieldtype": "Select",
+   "options": "\nPartially Completed\nFully Completed",
+   "reqd": 1
+  },
+  {
+   "fieldname": "maintenance_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Service Type",
+   "oldfieldname": "maintenance_type",
+   "oldfieldtype": "Select",
+   "options": "\nScheduled\nUnscheduled\nBreakdown\nInstallation\nCollection",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break0",
+   "fieldtype": "Section Break",
+   "oldfieldtype": "Section Break",
+   "options": "fa fa-wrench"
+  },
+  {
+   "fieldname": "more_info",
+   "fieldtype": "Section Break",
+   "label": "More Information",
+   "oldfieldtype": "Section Break",
+   "options": "fa fa-file-text"
+  },
+  {
+   "fieldname": "customer_feedback",
+   "fieldtype": "Small Text",
+   "label": "Customer Feedback",
+   "oldfieldname": "customer_feedback",
+   "oldfieldtype": "Small Text"
+  },
+  {
+   "fieldname": "col_break3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "no_copy": 1,
+   "oldfieldname": "status",
+   "oldfieldtype": "Data",
+   "options": "\nDraft\nCancelled\nSubmitted",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "oldfieldname": "company",
+   "oldfieldtype": "Select",
+   "options": "Company",
+   "print_hide": 1,
+   "remember_last_selected_value": 1,
+   "reqd": 1
+  },
+  {
+   "depends_on": "customer",
+   "fieldname": "contact_info_section",
+   "fieldtype": "Section Break",
+   "label": "Contact Info",
+   "options": "fa fa-bullhorn"
+  },
+  {
+   "fieldname": "customer_address",
+   "fieldtype": "Link",
+   "label": "Customer Address",
+   "options": "Address",
+   "print_hide": 1
+  },
+  {
+   "fieldname": "contact_person",
+   "fieldtype": "Link",
+   "label": "Contact Person",
+   "options": "Contact",
+   "print_hide": 1
+  },
+  {
+   "fieldname": "col_break4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "territory",
+   "fieldtype": "Link",
+   "label": "Territory",
+   "options": "Territory",
+   "print_hide": 1
+  },
+  {
+   "fieldname": "customer_group",
+   "fieldtype": "Link",
+   "label": "Customer Group",
+   "options": "Customer Group",
+   "print_hide": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Service Visit",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "label": "Item Code",
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "item_code.item_name",
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "label": "Item Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "label": "Location",
+   "options": "Location"
+  },
+  {
+   "fieldname": "serial_no",
+   "fieldtype": "Link",
+   "label": "Serial No",
+   "options": "Serial No"
+  },
+  {
+   "fieldname": "replaced_items_section",
+   "fieldtype": "Section Break",
+   "label": "Replaced Items"
+  },
+  {
+   "fieldname": "item_replaced",
+   "fieldtype": "Table",
+   "label": "Item Replaced",
+   "options": "Service Visit Replaced Item"
+  },
+  {
+   "fieldname": "machine_history_section",
+   "fieldtype": "Section Break",
+   "label": "Machine History"
+  },
+  {
+   "fieldname": "water_taste_10",
+   "fieldtype": "Select",
+   "label": "Water Taste / 10",
+   "options": "\nX\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "water_temp_chill",
+   "fieldtype": "Data",
+   "label": "Water Temp Chill",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "ph",
+   "fieldtype": "Data",
+   "label": "PH",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "ambient_temp_meter",
+   "fieldtype": "Data",
+   "label": "Ambient Temp Meter",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "tank_leve",
+   "fieldtype": "Data",
+   "label": "Tank Level",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "water_total",
+   "fieldtype": "Data",
+   "label": "Total Water Gen",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "water_day_before_yesterday",
+   "fieldtype": "Data",
+   "label": "Water Day before Yesterday",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_34",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "overall_function",
+   "fieldtype": "Select",
+   "label": "Overall Function",
+   "options": "\nYes\nNo",
+   "reqd": 1
+  },
+  {
+   "fieldname": "water_smell",
+   "fieldtype": "Select",
+   "label": "Water Smell",
+   "options": "\nYes\nNo",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "tds_first_cup",
+   "fieldtype": "Data",
+   "label": "TDS - First Cup",
+   "reqd": 1
+  },
+  {
+   "fieldname": "noise",
+   "fieldtype": "Data",
+   "label": "Noise"
+  },
+  {
+   "default": "0",
+   "fieldname": "ambient_rh_mmi",
+   "fieldtype": "Data",
+   "label": "Ambient RH% MMI"
+  },
+  {
+   "fieldname": "faults",
+   "fieldtype": "Select",
+   "label": "Faults",
+   "options": "\nYes\nNo",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "water_today",
+   "fieldtype": "Data",
+   "label": "Water Today",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "total_power_kw",
+   "fieldtype": "Data",
+   "label": "Total Power Kw",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_43",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "drain_tank_status",
+   "fieldtype": "Data",
+   "label": "Drain Tank Status"
+  },
+  {
+   "default": "0",
+   "fieldname": "water_temp_room",
+   "fieldtype": "Data",
+   "label": "Water Temp Room"
+  },
+  {
+   "default": "0",
+   "fieldname": "tds_4th_cup",
+   "fieldtype": "Data",
+   "label": "TDS - 4th Cup",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "ambient_temp_mmi",
+   "fieldtype": "Data",
+   "label": "Ambient Temp MMI"
+  },
+  {
+   "default": "0",
+   "fieldname": "ambient_rh_meter",
+   "fieldtype": "Data",
+   "label": "Ambient RH% Meter"
+  },
+  {
+   "default": "0",
+   "fieldname": "water_total_taken_at_visit",
+   "fieldtype": "Data",
+   "label": "Water Total Taken At Visit"
+  },
+  {
+   "default": "0",
+   "fieldname": "water_yesterday",
+   "fieldtype": "Data",
+   "label": "Water Yesterday"
+  },
+  {
+   "default": "0",
+   "fieldname": "total_compressor_hours",
+   "fieldtype": "Data",
+   "label": "Total Compressor Hours",
+   "reqd": 1
+  },
+  {
+   "fieldname": "work_done",
+   "fieldtype": "Small Text",
+   "label": "Work Done",
+   "reqd": 1
+  },
+  {
+   "fieldname": "items_to_be_replaced_in_future_section",
+   "fieldtype": "Section Break",
+   "label": "Items to be Replaced in Future"
+  },
+  {
+   "fieldname": "item_replace_in_future",
+   "fieldtype": "Table",
+   "label": "Item Replace in Future",
+   "options": "Service Visit Item Future Replacement"
+  },
+  {
+   "fieldname": "chargeable_service_item_section",
+   "fieldtype": "Section Break",
+   "label": "Chargeable Service Item"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_chargeable",
+   "fieldtype": "Check",
+   "label": "Is chargeable"
+  },
+  {
+   "depends_on": "eval:doc.is_chargeable ==1",
+   "fieldname": "chargeable_item",
+   "fieldtype": "Table",
+   "label": "Chargeable Item",
+   "options": "Chargeable Service Item"
+  },
+  {
+   "fieldname": "customer_signature_section",
+   "fieldtype": "Section Break",
+   "label": "Customer Signature"
+  },
+  {
+   "fieldname": "customer_signature",
+   "fieldtype": "Signature",
+   "label": "Customer Signature"
+  },
+  {
+   "fieldname": "callout",
+   "fieldtype": "Link",
+   "label": "Callout",
+   "options": "Callout",
+   "read_only": 1
+  },
+  {
+   "fieldname": "service_team",
+   "fieldtype": "Link",
+   "label": "Service Team",
+   "options": "Service Team",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_73",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "overall_comment",
+   "fieldtype": "Data",
+   "label": "Overall Comment",
+   "mandatory_depends_on": "eval: doc.overall_function == 'Yes'"
+  },
+  {
+   "depends_on": "eval:doc.water_smell == 'Yes'",
+   "fieldname": "water_smell_comment",
+   "fieldtype": "Data",
+   "label": "Water Smell comment",
+   "mandatory_depends_on": "eval:doc.water_smell == 'Yes'"
+  },
+  {
+   "depends_on": "eval:doc.faults == 'Yes'",
+   "fieldname": "fault_comment",
+   "fieldtype": "Data",
+   "label": "Fault Comment",
+   "mandatory_depends_on": "eval:doc.faults == 'Yes'"
+  },
+  {
+   "fieldname": "screen_version",
+   "fieldtype": "Data",
+   "label": "Screen Version"
+  },
+  {
+   "fieldname": "mainborad_version",
+   "fieldtype": "Data",
+   "label": "Mainborad Version"
+  },
+  {
+   "fieldname": "machine_generation",
+   "fieldtype": "Select",
+   "label": "Machine generation",
+   "options": "\nA0\nA1\nA2\nA3\nA4\nA5"
+  },
+  {
+   "fieldname": "water_test_comment",
+   "fieldtype": "Data",
+   "label": "Water Test Comment"
+  },
+  {
+   "fieldname": "column_break_48",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "icon": "fa fa-file-text",
+ "is_submittable": 1,
+ "links": [
+  {
+   "group": "Invoice",
+   "link_doctype": "Sales Invoice",
+   "link_fieldname": "service_visit"
+  },
+  {
+   "group": "Stock",
+   "link_doctype": "Stock Entry",
+   "link_fieldname": "service_visit"
+  },
+  {
+   "group": "Machine Replacement",
+   "link_doctype": "Machine Replacement",
+   "link_fieldname": "service_visit"
+  }
+ ],
+ "modified": "2022-10-25 11:30:45.891854",
+ "modified_by": "Administrator",
+ "module": "Dav Water",
+ "name": "Service Visit",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Maintenance User",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "status,maintenance_type,customer,customer_name,mntc_date,company",
+ "show_name_in_global_search": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "timeline_field": "customer",
+ "title_field": "customer_name"
+}
