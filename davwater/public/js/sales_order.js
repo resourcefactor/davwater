@@ -12,9 +12,7 @@ frappe.ui.form.on('Sales Order', {
                     posting_date: frm.doc.delivery_date
                 });
             });
-            frm.doc.items.forEach(function(item) {
-                frappe.model.set_value(item.doctype, item.name, 'cost_center', 'Leasing - DW')
-            })
+            davwater.settings.set_leasing_cost_center(frm);
 	    }
 	},
 	lease_period: function(frm){
@@ -47,10 +45,8 @@ frappe.ui.form.on('Sales Order', {
             })
         }
 	},
-	validate: function(frm, cdt, cdn){
-	    frm.doc.items.forEach(function(item) {
-	        frappe.model.set_value(item.doctype, item.name, 'cost_center', 'Leasing - DW')
-	    })
+	validate: async function(frm, cdt, cdn){
+	    await davwater.settings.set_leasing_cost_center(frm);
 	}
 });
 

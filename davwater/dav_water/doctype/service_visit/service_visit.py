@@ -4,6 +4,7 @@ import frappe
 from frappe.model.document import Document
 from frappe.utils import getdate
 from frappe import _
+from davwater.hook_event.util import get_dav_setting
 
 class ServiceVisit(Document):
 	def on_submit(self):
@@ -77,7 +78,7 @@ class ServiceVisit(Document):
 					'allow_zero_valuation_rate': 1,
 					'uom': item_doc.stock_uom,
 					'stock_uom': item_doc.stock_uom,
-					'cost_center': 'Customer care - DW'
+					'cost_center': get_dav_setting("customer_care_cost_center", required=False)
 				})
 			stock_entry.set_missing_values()
 			stock_entry.insert(ignore_permissions=True)

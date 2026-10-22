@@ -7,6 +7,41 @@ import datetime
 from erpnext.stock.utils import get_valuation_method, get_fifo_rate, get_valid_serial_nos
 
 
+DAV_SETTINGS_FIELDS = {
+    "leasing_cost_center": "Leasing Cost Center",
+    "customer_care_cost_center": "Customer Care Cost Center",
+    "trial_cogs_account": "Trial Machine COGS Account",
+    "machine_on_trial_account": "Machine on Trial Account",
+    "cogs_account": "Cost of Goods Sold Account",
+    "lease_assets_cost_account": "Lease Assets Cost Account",
+    "vat_account": "VAT 5% Account",
+    "iqc_warehouse": "Stock under IQC Warehouse",
+}
+
+
+def get_dav_setting(fieldname, required=True):
+    """Value of a Dav Water Settings field. Throws a pointer to the settings
+    page when the value is blank and required, otherwise returns None."""
+    value = frappe.db.get_single_value("Dav Water Settings", fieldname)
+    if not value and required:
+        frappe.throw(
+            _("Please set <b>{0}</b> in {1}.").format(
+                _(DAV_SETTINGS_FIELDS.get(fieldname, fieldname)),
+                get_link_to_form("Dav Water Settings", "Dav Water Settings"),
+            ),
+            title=_("Dav Water Settings Missing"),
+        )
+    return value
+
+
+@frappe.whitelist()
+def get_dav_setting_value(fieldname):
+    """Client side access, limited to the known setting fields."""
+    if fieldname not in DAV_SETTINGS_FIELDS:
+        frappe.throw(_("Invalid setting {0}").format(fieldname))
+    return get_dav_setting(fieldname, required=False)
+
+
 @frappe.whitelist()
 def make_quality_inspections(
     company=None, doctype=None, docname=None, items=None, inspection_type="Incoming"
@@ -114,9 +149,10 @@ def disabled_auto_repeat(doc, method):
 
 def calculate_purchase_recoverable_std_exp(doc, method):
     if doc.reverse_charge == "N":
+        vat_account = get_dav_setting("vat_account")
         recoverable_standard_rated_expenses = 0
         for res in doc.taxes:
-            if res.account_head == "23710 - VAT 5% - DW":
+            if res.account_head == vat_account:
                 recoverable_standard_rated_expenses += res.base_tax_amount
 
         doc.recoverable_standard_rated_expenses = recoverable_standard_rated_expenses

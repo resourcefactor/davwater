@@ -3,6 +3,7 @@ import frappe
 from frappe import _
 from frappe.utils import getdate, add_years, add_days, cint, date_diff, add_months
 from erpnext.accounts.doctype.journal_entry.journal_entry import make_reverse_journal_entry
+from davwater.hook_event.util import get_dav_setting
 
 
 def set_item_level_lease_value(doc, method):
@@ -163,24 +164,26 @@ def create_service_schedule(doc_name=None):
 
 def set_expense_account(doc, method):
     if doc.type_of_sale == "Trial":
+        trial_cogs_account = get_dav_setting("trial_cogs_account")
         for res in doc.items:
             item_group = frappe.get_value("Item", {'item_code': res.item_code}, "item_group")
             if item_group == 'Products':
-                res.expense_account = '51106 - COGS for Trial Machine - DW'
+                res.expense_account = trial_cogs_account
 
 
 def create_trial_type_jv(doc, method):
     if doc.type_of_sale == "Trial":
         if not doc.is_return:
+            trial_cogs_account = get_dav_setting("trial_cogs_account")
             gl_entry = frappe.get_all("GL Entry", {'voucher_no': doc.name},
                                       ['name', 'account', 'debit_in_account_currency', 'credit_in_account_currency'])
 
             for gl in gl_entry:
-                if '51106 - COGS for Trial Machine - DW' in gl.get('account'):
+                if trial_cogs_account in gl.get('account'):
                     credit_account = gl.get('account')
                     amount = gl.get('debit_in_account_currency')
 
-                    debit_account = "15150 - Machine on Trial (CGS) - DW"
+                    debit_account = get_dav_setting("machine_on_trial_account")
                     if amount > 0:
                         jv = frappe.new_doc('Journal Entry')
                         jv.voucher_type = 'Journal Entry'
@@ -316,7 +319,7 @@ def create_assets_item_and_asset_recode(doc, method):
                     asset_doc.purchase_date = item.start_date
                     asset_doc.available_for_use_date = item.start_date
                     asset_doc.calculate_depreciation = 1
-                    asset_doc.cost_center = 'Leasing - DW'
+                    asset_doc.cost_center = get_dav_setting("leasing_cost_center", required=False) or asset_doc.cost_center
 
                     date_str = str(item.start_date).split("-")
                     if int(date_str[2]) < 28:
@@ -345,8 +348,8 @@ def create_assets_item_and_asset_recode(doc, method):
 
 def create_lease_type_journal_entry(doc, amount, machine=None):
     if amount > 0:
-        credit_account = "51105 - Cost of Goods Sold - DW"
-        debit_account = "17810 - Lease assets Cost - DW"
+        credit_account = get_dav_setting("cogs_account")
+        debit_account = get_dav_setting("lease_assets_cost_account")
 
         jv = frappe.new_doc('Journal Entry')
         jv.voucher_type = 'Journal Entry'

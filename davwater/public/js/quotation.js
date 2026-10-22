@@ -7,15 +7,11 @@ frappe.ui.form.on('Quotation', {
                     posting_date: frm.doc.transaction_date
                 });
             });
-            frm.doc.items.forEach(function(item) {
-                frappe.model.set_value(item.doctype, item.name, 'cost_center', 'Leasing - DW')
-            })
+            davwater.settings.set_leasing_cost_center(frm);
         }
     },
-	validate: function(frm, cdt, cdn){
-	    frm.doc.items.forEach(function(item) {
-	        frappe.model.set_value(item.doctype, item.name, 'cost_center', 'Leasing - DW')
-	    })
+	validate: async function(frm, cdt, cdn){
+	    await davwater.settings.set_leasing_cost_center(frm);
 	}
 });
 

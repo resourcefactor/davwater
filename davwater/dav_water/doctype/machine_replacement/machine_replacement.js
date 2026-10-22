@@ -18,7 +18,8 @@ frappe.ui.form.on('Machine Replacement', {
         frm.set_query("new_machine_serial_no", function () {
             return {
                 filters: {
-                    delivery_document_type: ['is', 'not set'],
+                    status: 'Active',
+                    warehouse: ['is', 'set'],
                 }
             }
         });

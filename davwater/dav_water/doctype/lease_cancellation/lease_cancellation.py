@@ -5,6 +5,7 @@ import frappe
 import copy
 from frappe.model.document import Document
 from frappe import _
+from davwater.hook_event.util import get_dav_setting
 from frappe.utils import today, flt
 from erpnext.assets.doctype.asset.depreciation import get_depreciation_accounts, get_disposal_account_and_cost_center
 
@@ -158,7 +159,7 @@ class LeaseCancellation(Document):
                 'conversion_factor': 1,
                 'uom': item_doc.stock_uom,
                 'stock_uom': item_doc.stock_uom,
-                'cost_center': 'Leasing - DW',
+                'cost_center': get_dav_setting("leasing_cost_center", required=False),
                 'serial_no': serial_no_str,
                 'expense_account': la_setting.account
             })

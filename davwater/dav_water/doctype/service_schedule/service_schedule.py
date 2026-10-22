@@ -285,8 +285,8 @@ class ServiceSchedule(TransactionBase):
 	def validate_serial_no(self, item_code, serial_nos, amc_start_date):
 		for serial_no in serial_nos:
 			sr_details = frappe.db.get_value("Serial No", serial_no,
-											 ["warranty_expiry_date", "amc_expiry_date", "warehouse", "delivery_date",
-											  "item_code", "delivery_document_type", "delivery_document_no"], as_dict=1)
+											 ["warranty_expiry_date", "amc_expiry_date", "warehouse", "posting_date",
+											  "item_code", "reference_doctype", "reference_name"], as_dict=1)
 			if not sr_details:
 				frappe.throw(_("Serial No {0} not found").format(serial_no))
 
@@ -298,11 +298,13 @@ class ServiceSchedule(TransactionBase):
 			# 	throw(_("Serial No {0} is under Service contract upto {1}")
 			# 		  .format(serial_no, sr_details.amc_expiry_date))
 
-			if not sr_details.warehouse and sr_details.delivery_date and \
-					getdate(sr_details.delivery_date) > getdate(amc_start_date):
+			# ERPNext v16 keeps the last transaction of a serial no in posting_date / reference_*
+			# (the old delivery_date / delivery_document_* fields were removed).
+			if not sr_details.warehouse and sr_details.posting_date and \
+					getdate(sr_details.posting_date) > getdate(amc_start_date):
 				ignore_validation = 0
-				if sr_details.delivery_document_type == 'Delivery Note':
-					dn = frappe.get_doc(sr_details.delivery_document_type, sr_details.delivery_document_no)
+				if sr_details.reference_doctype == 'Delivery Note':
+					dn = frappe.get_doc(sr_details.reference_doctype, sr_details.reference_name)
 					ignore_validation = dn.ignore_s_validation
 				if not ignore_validation:
 					throw(_("Service start date can not be before delivery date for Serial No {0}")

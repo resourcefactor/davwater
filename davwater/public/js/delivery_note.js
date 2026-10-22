@@ -104,9 +104,12 @@ frappe.ui.form.on('Delivery Note Item', {
 	item_code: function(frm, cdt, cdn){
 	    var d = locals[cdt][cdn]
 	    if (d.item_code){
-	        frappe.db.get_value('Item', {'item_code': d.item_code}, 'item_group', (r) => {
+	        frappe.db.get_value('Item', {'item_code': d.item_code}, 'item_group', async (r) => {
 	            if(r.item_group == 'Products'){
-	                frappe.model.set_value(cdt, cdn, "expense_account", '51106 - COGS for Trial Machine - DW');
+	                let trial_account = await davwater.settings.get("trial_cogs_account");
+	                if(trial_account){
+	                    frappe.model.set_value(cdt, cdn, "expense_account", trial_account);
+	                }
 	            }
 	        })
 	    }

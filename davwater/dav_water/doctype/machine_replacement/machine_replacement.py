@@ -3,6 +3,7 @@
 
 import frappe
 from frappe import _
+from davwater.hook_event.util import get_dav_setting
 from frappe.utils import getdate, nowdate, sbool
 from frappe.model.document import Document
 from erpnext.controllers.sales_and_purchase_return import make_return_doc
@@ -38,8 +39,10 @@ class MachineReplacement(Document):
 
 	def return_delivery_note(self):
 		serial_no = frappe.get_doc("Serial No", self.old_machine_serial_no)
-		if serial_no.delivery_document_type == 'Delivery Note':
-			re_del_note = make_return_doc("Delivery Note", serial_no.delivery_document_no, None)
+		iqc_warehouse = get_dav_setting("iqc_warehouse")
+		delivery_note = get_last_delivery_note(self.old_machine_serial_no)
+		if delivery_note:
+			re_del_note = make_return_doc("Delivery Note", delivery_note, None)
 			delivery_dict = re_del_note.as_dict()
 			item_child = None
 			for res in delivery_dict.get('items'):
@@ -47,12 +50,12 @@ class MachineReplacement(Document):
 					res['serial_no'] = self.old_machine_serial_no
 					res['qty'] = -1
 					res['stock_qty'] = -1
-					res['warehouse'] = 'Stock under IQC UAE - DW'
+					res['warehouse'] = iqc_warehouse
 					item_child = res
 					break
 			delivery_dict['items'] = [item_child]
 			delivery_dict['machine_replacement_request'] = self.name
-			delivery_dict['set_warehouse'] = 'Stock under IQC UAE - DW'
+			delivery_dict['set_warehouse'] = iqc_warehouse
 			delivery_dict['posting_date'] = self.issue_date
 			delivery_dict['set_posting_time'] = 1
 			doc = frappe.get_doc(delivery_dict)
@@ -246,3 +249,24 @@ def check_sales_invoice(doc_name):
 			return 1
 		else:
 			return 0
+
+
+def get_last_delivery_note(serial_no):
+	"""Latest submitted Delivery Note that delivered the serial no (ERPNext v16 no longer
+	stores delivery_document_* on Serial No, so read it from the Serial and Batch Bundle)."""
+	result = frappe.db.sql(
+		"""
+		select sbb.voucher_no
+		from `tabSerial and Batch Bundle` sbb
+		inner join `tabSerial and Batch Entry` sbe on sbe.parent = sbb.name
+		where sbe.serial_no = %s
+			and sbb.voucher_type = 'Delivery Note'
+			and sbb.type_of_transaction = 'Outward'
+			and sbb.docstatus = 1
+			and sbb.is_cancelled = 0
+		order by sbb.posting_datetime desc, sbb.creation desc
+		limit 1
+		""",
+		serial_no,
+	)
+	return result[0][0] if result else None

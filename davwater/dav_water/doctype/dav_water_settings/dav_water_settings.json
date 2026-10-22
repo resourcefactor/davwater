@@ -1,0 +1,125 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "cost_centers_section",
+  "leasing_cost_center",
+  "column_break_cc",
+  "customer_care_cost_center",
+  "accounts_section",
+  "trial_cogs_account",
+  "machine_on_trial_account",
+  "cogs_account",
+  "column_break_acc",
+  "lease_assets_cost_account",
+  "vat_account",
+  "warehouses_section",
+  "iqc_warehouse"
+ ],
+ "fields": [
+  {
+   "fieldname": "cost_centers_section",
+   "fieldtype": "Section Break",
+   "label": "Cost Centers"
+  },
+  {
+   "fieldname": "leasing_cost_center",
+   "fieldtype": "Link",
+   "label": "Leasing Cost Center",
+   "options": "Cost Center",
+   "description": "Set on Sales Order / Quotation items, lease assets and lease cancellation stock entries."
+  },
+  {
+   "fieldname": "column_break_cc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer_care_cost_center",
+   "fieldtype": "Link",
+   "label": "Customer Care Cost Center",
+   "options": "Cost Center",
+   "description": "Used for stock entries made from Service Visit replaced items."
+  },
+  {
+   "fieldname": "accounts_section",
+   "fieldtype": "Section Break",
+   "label": "Accounts"
+  },
+  {
+   "fieldname": "trial_cogs_account",
+   "fieldtype": "Link",
+   "label": "Trial Machine COGS Account",
+   "options": "Account",
+   "description": "Expense account on Trial type Delivery Notes."
+  },
+  {
+   "fieldname": "machine_on_trial_account",
+   "fieldtype": "Link",
+   "label": "Machine on Trial Account",
+   "options": "Account",
+   "description": "Debit account of the Trial Journal Entry."
+  },
+  {
+   "fieldname": "cogs_account",
+   "fieldtype": "Link",
+   "label": "Cost of Goods Sold Account",
+   "options": "Account",
+   "description": "Credit account of the Lease Journal Entry."
+  },
+  {
+   "fieldname": "column_break_acc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "lease_assets_cost_account",
+   "fieldtype": "Link",
+   "label": "Lease Assets Cost Account",
+   "options": "Account",
+   "description": "Debit account of the Lease Journal Entry."
+  },
+  {
+   "fieldname": "vat_account",
+   "fieldtype": "Link",
+   "label": "VAT 5% Account",
+   "options": "Account",
+   "description": "Purchase tax account counted as recoverable standard rated expense."
+  },
+  {
+   "fieldname": "warehouses_section",
+   "fieldtype": "Section Break",
+   "label": "Warehouses"
+  },
+  {
+   "fieldname": "iqc_warehouse",
+   "fieldtype": "Link",
+   "label": "Stock under IQC Warehouse",
+   "options": "Warehouse",
+   "description": "Warehouse used when a machine replacement returns the old machine."
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-10-22 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Dav Water",
+ "name": "Dav Water Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
