@@ -353,7 +353,6 @@ def create_lease_type_journal_entry(doc, amount, machine=None):
 
         jv = frappe.new_doc('Journal Entry')
         jv.voucher_type = 'Journal Entry'
-        jv.naming_series = 'JV-'
         jv.posting_date = doc.posting_date
         jv.company = doc.company
         jv.delivery_note = doc.name
