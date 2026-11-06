@@ -8,6 +8,16 @@ from frappe.utils import cstr, flt, get_link_to_form
 
 
 class OverrideExpenseClaim(ExpenseClaim):
+    def validate(self):
+        self.set_expense_row_currency()
+        super().validate()
+
+    def set_expense_row_currency(self):
+        # the claim currency / exchange rate apply to every expense row
+        for row in self.expenses:
+            row.currency = self.currency
+            row.exchange_rate = self.exchange_rate
+
     @frappe.whitelist()
     def calculate_taxes(self):
         self.total_taxes_and_charges = 0

@@ -1,39 +1,26 @@
+// Multi currency is handled by HRMS at claim level: amounts are entered in the claim currency and the
+// company-currency (base_*) values are computed from the claim exchange rate. The claim currency and
+// exchange rate are copied to every expense row so they never have to be entered again on the line.
+const sync_expense_row_currency = function(frm) {
+	(frm.doc.expenses || []).forEach(function(row) {
+		if (row.currency !== frm.doc.currency) {
+			frappe.model.set_value(row.doctype, row.name, "currency", frm.doc.currency);
+		}
+		if (flt(row.exchange_rate) !== flt(frm.doc.exchange_rate)) {
+			frappe.model.set_value(row.doctype, row.name, "exchange_rate", frm.doc.exchange_rate);
+		}
+	});
+};
+
 frappe.ui.form.on('Expense Claim', {
-	currency: function(frm){
-		var company_currency = frappe.get_doc(":Company", frm.doc.company).default_currency;
-		if (frm.doc.currency == 'AED'){
-			frm.set_value("exchange_rate", 1);
-		}
-		else {
-			frappe.db.get_value("Currency Exchange", {"from_currency": frm.doc.currency, "to_currency": company_currency, "date": frm.doc.posting_date}, "exchange_rate", (r) => {
-				if(r.exchange_rate) {
-					frm.set_value("exchange_rate", r.exchange_rate);
-				}
-				else {
-					frappe.db.get_value("Currency Exchange", {"from_currency": frm.doc.currency, "to_currency": company_currency}, "exchange_rate", (r) => {
-						frm.set_value("exchange_rate", r.exchange_rate);
-					});
-				}
-			});
-		}
+	currency: function(frm) {
+		sync_expense_row_currency(frm);
 	},
-	posting_date: function(frm){
-		var company_currency = frappe.get_doc(":Company", frm.doc.company).default_currency;
-		if (frm.doc.currency == 'AED'){
-			frm.set_value("exchange_rate", 1);
-		}
-		else {
-			frappe.db.get_value("Currency Exchange", {"from_currency": frm.doc.currency, "to_currency": company_currency, "date": frm.doc.posting_date}, "exchange_rate", (r) => {
-				if(r.exchange_rate) {
-					frm.set_value("exchange_rate", r.exchange_rate);
-				}
-				else {
-					frappe.db.get_value("Currency Exchange", {"from_currency": frm.doc.currency, "to_currency": company_currency}, "exchange_rate", (r) => {
-						frm.set_value("exchange_rate", r.exchange_rate);
-					});
-				}
-			});
-		}
+	exchange_rate: function(frm) {
+		sync_expense_row_currency(frm);
+	},
+	before_save: function(frm) {
+		sync_expense_row_currency(frm);
 	}
 })
 
@@ -64,71 +51,13 @@ frappe.ui.form.on('Expense Claim Detail', {
 			}
 		});
     },
-	base_amount: function(frm, cdt, cdn) {
-		var d = locals[cdt][cdn];
-		if(d.exchange_rate) {
-			frappe.model.set_value(cdt, cdn, "base_sanctioned_amount", d.base_amount);
-			frappe.model.set_value(cdt, cdn, "amount", d.base_amount * d.exchange_rate);
-			frappe.model.set_value(cdt, cdn, "sanctioned_amount", d.base_sanctioned_amount * d.exchange_rate);
-			frm.refresh_fields();
-		}
-		else{
-			frappe.model.set_value(cdt, cdn, "base_sanctioned_amount", d.base_amount);
-			frappe.model.set_value(cdt, cdn, "amount", d.base_amount);
-			frappe.model.set_value(cdt, cdn, "sanctioned_amount", d.base_sanctioned_amount);
-			frm.refresh_fields();
-		}
+	expense_type: function(frm, cdt, cdn) {
+		frappe.model.set_value(cdt, cdn, "currency", frm.doc.currency);
+		frappe.model.set_value(cdt, cdn, "exchange_rate", frm.doc.exchange_rate);
 	},
-	base_sanctioned_amount: function(frm, cdt, cdn) {
-		var d = locals[cdt][cdn];
-		if(d.exchange_rate) {
-			frappe.model.set_value(cdt, cdn, "sanctioned_amount", d.base_sanctioned_amount * d.exchange_rate);
-			frm.refresh_fields();
-		}
-		else{
-			frappe.model.set_value(cdt, cdn, "sanctioned_amount", d.base_sanctioned_amount);
-			frm.refresh_fields();
-		}
-	},
-	expense_type: function(frm, cdt, cdn){
-		if(frm.doc.is_multi_currency){
-			frappe.model.set_value(cdt, cdn, "currency", frm.doc.currency);
-			frappe.model.set_value(cdt, cdn, "exchange_rate", frm.doc.exchange_rate);
-			frm.refresh_fields();
-		}
-		else{
-			frappe.model.set_value(cdt, cdn, "currency", 'AED');
-			frappe.model.set_value(cdt, cdn, "exchange_rate", 1);
-			frm.refresh_fields();
-		}
-	},
-	exchange_rate: function(frm, cdt, cdn){
-		var d = locals[cdt][cdn];
-		frappe.model.set_value(cdt, cdn, "sanctioned_amount", d.base_sanctioned_amount * d.exchange_rate);
-		frappe.model.set_value(cdt, cdn, "amount", d.base_amount * d.exchange_rate);
-		frm.refresh_fields();
-	},
-	currency: function(frm, cdt, cdn){
-		var company_currency = frappe.get_doc(":Company", frm.doc.company).default_currency;
-		var d = locals[cdt][cdn];
-		if (frm.doc.currency == 'AED'){
-			frm.set_value("exchange_rate", 1);
-		}
-		else {
-			frappe.db.get_value("Currency Exchange", {"from_currency": d.currency, "to_currency": company_currency, "date": frm.doc.posting_date}, "exchange_rate", (r) => {
-				if(r.exchange_rate) {
-					frappe.model.set_value(cdt, cdn, "exchange_rate", r.exchange_rate);
-				}
-				else {
-					frappe.db.get_value("Currency Exchange", {"from_currency": d.currency, "to_currency": company_currency}, "exchange_rate", (r) => {
-						frappe.model.set_value(cdt, cdn, "exchange_rate", r.exchange_rate);
-					});
-				}
-			});
-		}
-		frappe.model.set_value(cdt, cdn, "sanctioned_amount", d.base_sanctioned_amount * d.exchange_rate);
-		frappe.model.set_value(cdt, cdn, "amount", d.base_amount * d.exchange_rate);
-		frm.refresh_fields();
+	expenses_add: function(frm, cdt, cdn) {
+		frappe.model.set_value(cdt, cdn, "currency", frm.doc.currency);
+		frappe.model.set_value(cdt, cdn, "exchange_rate", frm.doc.exchange_rate);
 	}
 })
 

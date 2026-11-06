@@ -139,7 +139,7 @@ def get_total_emiratewise(filters):
 			UNION ALL
 			
 			select 
-				s.vat_emirate as emirate, i.taxable_amount as total, i.tax_amount
+				s.vat_emirate as emirate, i.taxable_amount * s.exchange_rate as total, i.base_tax_amount as tax_amount
 			from
 				`tabExpense Taxes and Charges` i inner join `tabExpense Claim` s
 			on
